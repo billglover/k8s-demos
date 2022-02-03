@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: counter
+  name: counter
+  labels:
+    app: counter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: counter
+  template:
+    metadata:
+      labels:
+        app: counter
+    spec:
+      volumes:
+      - name: counter-pv-storage
+        persistentVolumeClaim:
+          claimName: counter-pv-claim
+      containers:
+      - name: counter
+        image: harbor.shared.12factor.xyz/bglover/counter:0.0.0
+        args: ["-file", "/usr/share/counter/count.txt"]
+        ports:
+        - containerPort: 8080
+          name: "http-server"
+        volumeMounts:
+        - mountPath: "/usr/share/counter"
+          name: counter-pv-storage
+        resources:
+          requests:
+            memory: "16Mi"
+            cpu: "250m"
+          limits:
+            memory: "32Mi"
+            cpu: "500m"
