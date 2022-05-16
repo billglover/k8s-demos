@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: demo-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: hello
+  policyTypes:
+    - Ingress
+  ingress:
+    - {}
