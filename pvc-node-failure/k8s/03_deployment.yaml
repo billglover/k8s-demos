@@ -22,7 +22,7 @@ spec:
           claimName: counter-pv-claim
       containers:
       - name: counter
-        image: harbor.shared.12factor.xyz/bglover/counter:0.0.0
+        image: bglovervmw/counter:latest
         args: ["-file", "/usr/share/counter/count.txt"]
         ports:
         - containerPort: 8080
